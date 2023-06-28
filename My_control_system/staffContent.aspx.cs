@@ -116,7 +116,7 @@ namespace My_control_system
             TextBox phoneTextBox = (TextBox)e.Item.Cells[4].Controls[0];
             TextBox addressTextBox = (TextBox)e.Item.Cells[5].Controls[0];
             TextBox dobTextBox = (TextBox)e.Item.Cells[6].Controls[0];
-            DropDownList genderDropDown = (DropDownList)e.Item.FindControl("ddlGender");
+            TextBox genderDropDown = (TextBox)e.Item.Cells[7].Controls[0];
             TextBox dojTextBox = (TextBox)e.Item.Cells[8].Controls[0];
 
 
@@ -127,7 +127,7 @@ namespace My_control_system
             string phone = phoneTextBox.Text;
             string address = addressTextBox.Text;
             DateTime dob = Convert.ToDateTime(dobTextBox.Text);
-            string gender = ddlGender.SelectedValue;
+            string gender = genderDropDown.Text;
             DateTime doj= Convert.ToDateTime(dobTextBox.Text);
 
 

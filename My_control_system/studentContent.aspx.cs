@@ -47,6 +47,7 @@ namespace My_control_system
             address.Text = string.Empty;
             dateofbirth.Text = string.Empty;
             ddlGender.SelectedIndex = 0;
+            lblMessage.Text = "";
         }
 
         public int Updatestudentdata(int student_id, string stu_first_name, string stu_last_name, string stu_email_id, string stu_phone_number, string stu_address, DateTime stu_dateofbirth, string stu_gender)
@@ -177,17 +178,18 @@ namespace My_control_system
 
         protected void DataGrid1_UpdateCommand1(object source, DataGridCommandEventArgs e)
         {
-         
-            TextBox studentIdTextBox = (TextBox)e.Item.Cells[0].Controls[0];
-            TextBox firstNameTextBox = (TextBox)e.Item.Cells[1].Controls[0];
-            TextBox lastNameTextBox = (TextBox)e.Item.Cells[2].Controls[0];
-            TextBox emailTextBox = (TextBox)e.Item.Cells[3].Controls[0];
-            TextBox phoneTextBox = (TextBox)e.Item.Cells[4].Controls[0];
-            TextBox addressTextBox = (TextBox)e.Item.Cells[5].Controls[0];
-            TextBox dobTextBox = (TextBox)e.Item.Cells[6].Controls[0];
-            TextBox ddlGender = (TextBox)e.Item.Cells[7].Controls[0];
+            try
+            {
+                TextBox studentIdTextBox = (TextBox)e.Item.Cells[0].Controls[0];
+                TextBox firstNameTextBox = (TextBox)e.Item.Cells[1].Controls[0];
+                TextBox lastNameTextBox = (TextBox)e.Item.Cells[2].Controls[0];
+                TextBox emailTextBox = (TextBox)e.Item.Cells[3].Controls[0];
+                TextBox phoneTextBox = (TextBox)e.Item.Cells[4].Controls[0];
+                TextBox addressTextBox = (TextBox)e.Item.Cells[5].Controls[0];
+                TextBox dobTextBox = (TextBox)e.Item.Cells[6].Controls[0];
+                TextBox ddlGender = (TextBox)e.Item.Cells[7].Controls[0];
 
-            int studentId = Convert.ToInt32(studentIdTextBox.Text);
+                int studentId = Convert.ToInt32(studentIdTextBox.Text);
                 string firstName = firstNameTextBox.Text;
                 string lastName = lastNameTextBox.Text;
                 string email = emailTextBox.Text;
@@ -196,18 +198,23 @@ namespace My_control_system
                 DateTime dob = Convert.ToDateTime(dobTextBox.Text);
                 string gender = ddlGender.Text;
 
-            int rowsAffected = Updatestudentdata(studentId, firstName, lastName, email, phone, address, dob, gender);
+                int rowsAffected = Updatestudentdata(studentId, firstName, lastName, email, phone, address, dob, gender);
 
                 if (rowsAffected > 0)
                 {
-                DataGrid1.EditItemIndex = -1;
-                Bindstudentdata();
+                    DataGrid1.EditItemIndex = -1;
+                    Bindstudentdata();
                     lblMessage.Text = "Student record updated successfully.";
                 }
                 else
                 {
                     lblMessage.Text = "Failed to update student record.";
                 }
+            }
+            catch (System.FormatException)
+            {
+                lblMessage.Text = "Valid date of birth required.";
+            }
             
         }
 

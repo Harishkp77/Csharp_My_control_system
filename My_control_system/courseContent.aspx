@@ -49,7 +49,7 @@
                         <asp:BoundColumn DataField="course_id" HeaderText="Course  ID"></asp:BoundColumn>
                         <asp:BoundColumn DataField="course_name" HeaderText="Course Name"></asp:BoundColumn>
                         <asp:BoundColumn DataField="course_description" HeaderText="Descripition"></asp:BoundColumn>
-                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" UpdateText="Update"></asp:EditCommandColumn>
+                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" CausesValidation="False" UpdateText ="Update"></asp:EditCommandColumn>
                         <asp:ButtonColumn ButtonType="PushButton" CommandName="Delete" HeaderText="Delete" Text="Delete"></asp:ButtonColumn>
                     </Columns>
                 </asp:DataGrid>

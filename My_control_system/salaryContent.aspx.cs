@@ -14,9 +14,11 @@ namespace My_control_system
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-                     
+
+
             if (!IsPostBack)
             {
+                yearTextBox.Text = (DateTime.Now.Year).ToString();
                 LoadsalaryData();
             }
         }
@@ -44,42 +46,54 @@ namespace My_control_system
 
         protected void Register_Click(object sender, EventArgs e)
         {
-       
-         int staffId = int.Parse(staff_idTextBox.Text);
-            string month = monthDropDown.SelectedValue;
-            int year = int.Parse(yearTextBox.Text);
-         decimal amount = Convert.ToDecimal(amountTextBox.Text);
+            try
 
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("InsertSalary", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-         
-            cmd.Parameters.AddWithValue("@staff_id",staffId);
-            cmd.Parameters.AddWithValue("@month", month);
-            cmd.Parameters.AddWithValue("@year", year);
-            cmd.Parameters.AddWithValue("@amount ", amount);
-
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
             {
-                DataGrid1.EditItemIndex = -1;
-                LoadsalaryData();
-                lblMessage.Text = "salary record updated successfully.";
+                int staffId = int.Parse(staff_idTextBox.Text);
+                string month = monthDropDown.SelectedValue;
+                int year = int.Parse(yearTextBox.Text);
+                decimal amount = Convert.ToDecimal(amountTextBox.Text);
+
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("InsertSalary", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@staff_id", staffId);
+                cmd.Parameters.AddWithValue("@month", month);
+                cmd.Parameters.AddWithValue("@year", year);
+                cmd.Parameters.AddWithValue("@amount ", amount);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    DataGrid1.EditItemIndex = -1;
+                    LoadsalaryData();
+                    lblMessage.Text = "salary record updated successfully.";
+
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update salary" +
+                        "+ record.";
+                }
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+
+                lblMessage.Text = " Given Staff  Id  doesn't exists ,Kindly insert Valid Id to Add salary";
 
             }
-            else
+            catch (Exception)
             {
-                lblMessage.Text = "Failed to update salary" +
-                    "+ record.";
+                lblMessage.Text = "An error occurred. Please contact the administrator.";
             }
-            ClearInputFields();
 
         }
 
-        protected void Reset_Click(object sender, EventArgs e)
+            protected void Reset_Click(object sender, EventArgs e)
         {
             ClearInputFields();
         }

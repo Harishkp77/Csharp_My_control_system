@@ -43,34 +43,46 @@ namespace My_control_system
         protected void Register_Click(object sender, EventArgs e)
         {
 
-         
-            int subjectId = int.Parse(subject_idTextBox.Text);
-            DateTime date = DateTime.Parse(exam_dateTextBox.Text);
-         
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("InsertExam", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-         
-            cmd.Parameters.AddWithValue("@subject_id", subjectId);
-            cmd.Parameters.AddWithValue("@exam_date", date);
-      
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
+            try
             {
-                DataGrid1.EditItemIndex = -1;
-                LoadexamData();
-                lblMessage.Text = "exam record updated successfully.";
 
+
+                int subjectId = int.Parse(subject_idTextBox.Text);
+                DateTime date = DateTime.Parse(exam_dateTextBox.Text);
+
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("InsertExam", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@subject_id", subjectId);
+                cmd.Parameters.AddWithValue("@exam_date", date);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    DataGrid1.EditItemIndex = -1;
+                    LoadexamData();
+                    lblMessage.Text = "exam record updated successfully.";
+
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update exam record.";
+                }
+                ClearInputFields();
             }
-            else
+            catch (System.Data.SqlClient.SqlException)
             {
-                lblMessage.Text = "Failed to update exam record.";
+                lblMessage.Text = "Invalid Subject Id. Provide Valid Id to add Exam";
             }
-            ClearInputFields();
+            catch (Exception ex)
+            {
 
+                lblMessage.Text = " An error occurred. Please contact the administrator. " + ex.Message;
+            }
 
 
         }
