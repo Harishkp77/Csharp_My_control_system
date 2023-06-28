@@ -59,7 +59,7 @@
                         <asp:BoundColumn DataField="month" HeaderText="Month"></asp:BoundColumn>
                         <asp:BoundColumn DataField="year" HeaderText="Year"></asp:BoundColumn>
                         <asp:BoundColumn DataField="amount" HeaderText="Amount"></asp:BoundColumn>
-                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" UpdateText="Update"></asp:EditCommandColumn>
+                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" CausesValidation="False" UpdateText="Update"></asp:EditCommandColumn>
                         <asp:ButtonColumn ButtonType="PushButton" CommandName="Delete" HeaderText="Delete" Text="Delete"></asp:ButtonColumn>
                     </Columns>
                 </asp:DataGrid>

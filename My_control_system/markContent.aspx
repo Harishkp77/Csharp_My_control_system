@@ -44,7 +44,7 @@
                         <asp:BoundColumn DataField="subject_id" HeaderText="Subject ID"></asp:BoundColumn>
                         <asp:BoundColumn DataField="exam_id" HeaderText="Exam ID"></asp:BoundColumn>
                         <asp:BoundColumn DataField="marks_obtained" HeaderText="Marks Obtained"></asp:BoundColumn>
-                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" UpdateText="Update"></asp:EditCommandColumn>
+                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" CausesValidation="False" UpdateText="Update"></asp:EditCommandColumn>
                         <asp:ButtonColumn ButtonType="PushButton" CommandName="Delete" HeaderText="Delete" Text="Delete"></asp:ButtonColumn>
                     </Columns>
                 </asp:DataGrid>

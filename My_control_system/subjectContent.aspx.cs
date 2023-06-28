@@ -167,6 +167,7 @@ namespace My_control_system
             course_id.Text = string.Empty;
             subj_name.Text = string.Empty;
             subj_description.Text = string.Empty;
+            lblMessage.Text = "";
         }
 
     protected void Reset_Click(object sender, EventArgs e)

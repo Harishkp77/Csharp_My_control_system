@@ -107,7 +107,7 @@
                         <asp:BoundColumn DataField="staff_dateofbirth" DataFormatString="{0:dd/MMM/yyyy}" HeaderText="Date Of Birth"></asp:BoundColumn>
                         <asp:BoundColumn DataField="staff_gender" HeaderText="Gender"></asp:BoundColumn>
                         <asp:BoundColumn DataField="staff_dateofjoin" HeaderText="Date of Joining" DataFormatString="{0:dd/MMM/yyyy}"></asp:BoundColumn>
-                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" UpdateText="Update"></asp:EditCommandColumn>
+                        <asp:EditCommandColumn ButtonType="PushButton" CancelText="Cancel" EditText="Edit" HeaderText="Modify" CausesValidation="False" UpdateText="Update"></asp:EditCommandColumn>
                         <asp:ButtonColumn ButtonType="PushButton" CommandName="Delete" HeaderText="Delete" Text="Delete"></asp:ButtonColumn>
                     </Columns>
                 </asp:DataGrid>
