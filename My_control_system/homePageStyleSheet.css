@@ -1,0 +1,129 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20vh;
+    background-color: rgb(250, 135, 45 );
+    border-bottom: 1px solid black;
+    background-image: url('../img/header-bg.jpg');
+    background-repeat: no-repeat;
+}
+
+    .header h1 {
+        padding-left: 50px;
+        align-items: center;
+    }
+
+.titlebar {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.navbar {
+    display: inline-flex;
+    justify-content: flex-end;
+    gap: 20px;
+    list-style-type: none;
+}
+
+
+    .navbar li a {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #ccc;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .navbar li a:hover {
+            background-color: #D6CC94;
+            font-weight: bolder;
+            color: #fff;
+        }
+
+        .navbar li a.active {
+            background-color: #aaaaaa;
+        }
+
+
+.body {
+    margin-top: 20vh;
+    overflow-y: scroll;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid black;
+    color: #333;
+}
+
+    .body h1 {
+        text-align: center;
+        font-size: 25px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .body h2 {
+        font-size: 18px;
+        text-decoration: underline;
+        color: rgb(250, 135, 45 );
+    }
+
+
+    .body p {
+        text-align: justify;
+        line-height: 1.5;
+        text-indent: 2em;
+    }
+
+    .body ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+
+        .body ul li {
+            margin-bottom: 5px;
+        }
+
+
+.footer {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #c4c4c4;
+    margin: 0%;
+    padding: 0;
+}
+
+    .footer .address,
+    .footer .contact {
+        flex: 1;
+        text-indent: 2em;
+    }
+
+.body .footer h3 {
+    margin: 5px 10px;
+    color: rgb(250, 135, 45 );
+    font-weight: bolder;
+}
+
+.footer p {
+    margin: 5px 10px;
+}
