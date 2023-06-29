@@ -12,7 +12,7 @@
                     <asp:TextBox ID="staffid" runat="server"></asp:TextBox>
                          <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Staff Id Required" ControlToValidate="staffid" Display="Dynamic" SetFocusOnError="True" ForeColor="#FF3300"></asp:RequiredFieldValidator>
                         <br />
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ErrorMessage="Must Be Numeric" ControlToValidate="staffid" Display="Dynamic" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d+$"></asp:RegularExpressionValidator>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ErrorMessage="ID should be 3-8 Number" ControlToValidate="staffid" Display="Dynamic" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d{3,8}$"></asp:RegularExpressionValidator>
                     </div>
               
                 <div class="form-group">

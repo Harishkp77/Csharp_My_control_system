@@ -13,7 +13,7 @@
                         <asp:Label ID="staff_id" runat="server" Text="Staff Id:"></asp:Label>
                         <asp:TextBox ID="staff_idTextBox" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Staff Id Required" ControlToValidate="staff_idTextBox" Display="Dynamic" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator><br />
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Min 3 Numeric value" ControlToValidate="staff_idTextBox" Display="Dynamic" ForeColor="Red" ValidationExpression="^\d{3,8}$"></asp:RegularExpressionValidator>  </div>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="ID should be 3-8 Number" ControlToValidate="staff_idTextBox" Display="Dynamic" ForeColor="Red" ValidationExpression="^\d{3,8}$"></asp:RegularExpressionValidator>  </div>
                     <div class="form-group">
                         <asp:Label ID="month" runat="server" Text="Month:"></asp:Label>
                         <asp:DropDownList ID="monthDropDown" runat="server">

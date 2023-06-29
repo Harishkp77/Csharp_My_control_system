@@ -72,39 +72,53 @@ namespace My_control_system
 
         protected void Register_Click(object sender, EventArgs e)
         {
-            try
+            DateTime input = Convert.ToDateTime(dateofbirth.Text);
+            int age = DateTime.Today.Year - input.Year;
+            if (DateTime.Today < input.AddYears(age))
             {
-                int student_id = Convert.ToInt32(studentid.Text);
-                string stu_first_name = firstname.Text;
-                string stu_last_name = lastname.Text;
-                string stu_email_id = emailid.Text;
-                string stu_phone_number = phone.Text;
-                string stu_address = address.Text;
-                DateTime stu_dateofbirth = Convert.ToDateTime(dateofbirth.Text);
-                string stu_gender = ddlGender.SelectedValue;
-                                              
-                int rowsAffected = Insertstudentdata(student_id, stu_first_name, stu_last_name, stu_email_id, stu_phone_number, stu_address, stu_dateofbirth, stu_gender);
-                if (rowsAffected > 0)
-                {
-                    lblMessage.Text = "Student registration successful.";
-                    Bindstudentdata();
-                }
-                else
-                {
-                    lblMessage.Text = "Failed to register student.";
-                }
-                ClearFields();
-        }
-
-            catch(System.Data.SqlClient.SqlException )
-            {
-
-                lblMessage.Text = " Given Student Id is already exists, Change new Id to insert data";
+                age--;
             }
-            catch (Exception ex)
+            if ((age >= 18 && age <= 60)) 
             {
+                DateTime stu_dateofbirth = input;
+                try
+                {
+                    int student_id = Convert.ToInt32(studentid.Text);
+                    string stu_first_name = firstname.Text;
+                    string stu_last_name = lastname.Text;
+                    string stu_email_id = emailid.Text;
+                    string stu_phone_number = phone.Text;
+                    string stu_address = address.Text;
 
-                lblMessage.Text = " An error occurred. Please contact the administrator. " + ex.Message;
+                    string stu_gender = ddlGender.SelectedValue;
+
+                    int rowsAffected = Insertstudentdata(student_id, stu_first_name, stu_last_name, stu_email_id, stu_phone_number, stu_address, stu_dateofbirth, stu_gender);
+                    if (rowsAffected > 0)
+                    {
+                        lblMessage.Text = "Student registration successful.";
+                        Bindstudentdata();
+                    }
+                    else
+                    {
+                        lblMessage.Text = "Failed to register student.";
+                    }
+
+                }
+
+                catch (System.Data.SqlClient.SqlException)
+                {
+
+                    lblMessage.Text = " Given Student Id is already exists, Change new Id to insert data";
+                }
+                catch (Exception ex)
+                {
+
+                    lblMessage.Text = " An error occurred. Please contact the administrator. " + ex.Message;
+                }
+            }
+            else
+            {
+                lblMessage.Text = "Age should be 18 to 60";
             }
              
         }

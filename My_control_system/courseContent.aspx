@@ -11,7 +11,7 @@
                     <asp:Label ID="id" runat="server" Text="Course Id:"></asp:Label>
                     <asp:TextBox ID="course_id" runat="server"></asp:TextBox>
                     <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Course Id Required" ControlToValidate="course_id" Display="Dynamic" ForeColor="Red" SetFocusOnError="True"></asp:RangeValidator><br />
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Must Be Numeric" ControlToValidate="course_id" Display="Dynamic" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d+$"></asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="ID should be 3-8 Number" ControlToValidate="course_id" Display="Dynamic" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d{3,8}$"></asp:RegularExpressionValidator>
                 </div>
                 <div class="form-group">
                     <asp:Label ID="stu_fname" runat="server" Text="Course Name:"></asp:Label>

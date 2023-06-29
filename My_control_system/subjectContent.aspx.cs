@@ -83,36 +83,44 @@ namespace My_control_system
 
         protected void DataGrid1_UpdateCommand1(object source, DataGridCommandEventArgs e)
         {
-            TextBox subjectIdTextBox = (TextBox)e.Item.Cells[0].Controls[0];
-            TextBox courseIdTextBox = (TextBox)e.Item.Cells[1].Controls[0];
-            TextBox subjectNameTextBox = (TextBox)e.Item.Cells[2].Controls[0];
-            TextBox subjectDescriptionTextBox = (TextBox)e.Item.Cells[3].Controls[0];
-            int subjectId = Convert.ToInt32(subjectIdTextBox.Text);
-            int courseId = Convert.ToInt32(courseIdTextBox.Text);
-            string subjectName = subjectNameTextBox.Text;
-            string subjectDescription = subjectDescriptionTextBox.Text;
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("UpdateSubject", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-            cmd.Parameters.AddWithValue("@subject_id", subjectId);
-            cmd.Parameters.AddWithValue("@course_id ", courseId);
-            cmd.Parameters.AddWithValue("@subject_name", subjectName);
-            cmd.Parameters.AddWithValue("@subject_description", subjectDescription);
+            try
+            {
+                TextBox subjectIdTextBox = (TextBox)e.Item.Cells[0].Controls[0];
+                TextBox courseIdTextBox = (TextBox)e.Item.Cells[1].Controls[0];
+                TextBox subjectNameTextBox = (TextBox)e.Item.Cells[2].Controls[0];
+                TextBox subjectDescriptionTextBox = (TextBox)e.Item.Cells[3].Controls[0];
+                int subjectId = Convert.ToInt32(subjectIdTextBox.Text);
+                int courseId = Convert.ToInt32(courseIdTextBox.Text);
+                string subjectName = subjectNameTextBox.Text;
+                string subjectDescription = subjectDescriptionTextBox.Text;
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("UpdateSubject", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                cmd.Parameters.AddWithValue("@subject_id", subjectId);
+                cmd.Parameters.AddWithValue("@course_id ", courseId);
+                cmd.Parameters.AddWithValue("@subject_name", subjectName);
+                cmd.Parameters.AddWithValue("@subject_description", subjectDescription);
 
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
-            {
-                DataGrid1.EditItemIndex = -1;
-                Bindcoursedata();
-                lblMessage.Text = "Subject record updated successfully.";
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    DataGrid1.EditItemIndex = -1;
+                    Bindcoursedata();
+                    lblMessage.Text = "Subject record updated successfully.";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update subject record.";
+                }
             }
-            else
+            catch (System.FormatException)
             {
-                lblMessage.Text = "Failed to update subject record.";
+                lblMessage.Text = "Valid date of birth required.";
             }
+
         }
 
         protected void Register_Click(object sender, EventArgs e)
@@ -167,7 +175,7 @@ namespace My_control_system
             course_id.Text = string.Empty;
             subj_name.Text = string.Empty;
             subj_description.Text = string.Empty;
-            lblMessage.Text = "";
+            lblMessage.Text = string.Empty;
         }
 
     protected void Reset_Click(object sender, EventArgs e)

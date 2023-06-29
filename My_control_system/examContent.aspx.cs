@@ -38,6 +38,7 @@ namespace My_control_system
    
             subject_idTextBox.Text = string.Empty;
             exam_dateTextBox.Text = string.Empty;
+            lblMessage.Text = string.Empty;
         }
 
         protected void Register_Click(object sender, EventArgs e)
@@ -133,29 +134,38 @@ namespace My_control_system
 
         protected void DataGrid1_UpdateCommand1(object source, DataGridCommandEventArgs e)
         {
-            int exam_id = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
-            int subjectId = int.Parse(((TextBox)e.Item.Cells[1].Controls[0]).Text);
-            DateTime date = DateTime.Parse(((TextBox)e.Item.Cells[2].Controls[0]).Text);
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("UpdateExam", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-            cmd.Parameters.AddWithValue("@exam_id", exam_id);
-            cmd.Parameters.AddWithValue("@subject_id", subjectId);
-            cmd.Parameters.AddWithValue("@exam_date", date);
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
+
+            try
             {
-                DataGrid1.EditItemIndex = -1;
-                LoadexamData();
-                lblMessage.Text = "exam record updated successfully.";
+                int exam_id = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
+                int subjectId = int.Parse(((TextBox)e.Item.Cells[1].Controls[0]).Text);
+                DateTime date = DateTime.Parse(((TextBox)e.Item.Cells[2].Controls[0]).Text);
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("UpdateExam", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                cmd.Parameters.AddWithValue("@exam_id", exam_id);
+                cmd.Parameters.AddWithValue("@subject_id", subjectId);
+                cmd.Parameters.AddWithValue("@exam_date", date);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    DataGrid1.EditItemIndex = -1;
+                    LoadexamData();
+                    lblMessage.Text = "exam record updated successfully.";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update exam record.";
+                }
             }
-            else
+            catch (System.FormatException)
             {
-                lblMessage.Text = "Failed to update exam record.";
+                lblMessage.Text = "Valid date of birth required.";
             }
+
         }
 
         protected void DataGrid1_SelectedIndexChanged1(object sender, EventArgs e)

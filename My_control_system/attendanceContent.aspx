@@ -13,13 +13,13 @@
                         <asp:TextBox ID="userTextBox" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required User Id" ControlToValidate="userTextBox" Display="Dynamic" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                         <br />
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Must Be Numeric" ControlToValidate="userTextBox" Display="Dynamic" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d+$"></asp:RegularExpressionValidator>  </div>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="ID should be 3-8 Number" ControlToValidate="userTextBox" Display="Dynamic" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d{3,8}$"></asp:RegularExpressionValidator>  </div>
                     <div class="form-group">
                         <asp:Label ID="subjectLabel" runat="server" Text="Subject ID:"></asp:Label>
                         <asp:TextBox ID="subjectTextBox" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required Subject Id" ControlToValidate="subjectTextBox" Display="Dynamic" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                         <br />
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="Must Be Numeric" ControlToValidate="subjectTextBox" Display="Dynamic" ForeColor="Red" ValidationExpression="^\d+$"></asp:RegularExpressionValidator>     </div>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="Must Be Numeric" ControlToValidate="subjectTextBox" Display="Dynamic" ForeColor="Red" ValidationExpression="^\d{3,8}$"></asp:RegularExpressionValidator>     </div>
                     <div class="form-group">
                         <asp:Label ID="dateLabel" runat="server" Text="Date:"></asp:Label>
                         <asp:TextBox ID="dateTextBox" runat="server"></asp:TextBox>

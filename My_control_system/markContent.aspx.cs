@@ -158,33 +158,42 @@ namespace My_control_system
 
         protected void DataGrid1_UpdateCommand1(object source, DataGridCommandEventArgs e)
         {
-            int markid = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
-            int userid= int.Parse(((TextBox)e.Item.Cells[1].Controls[0]).Text);
-            int subjectid= Convert.ToInt32(((TextBox)e.Item.Cells[2].Controls[0]).Text);
-            int examid = Convert.ToInt32(((TextBox)e.Item.Cells[3].Controls[0]).Text);
-            decimal marks = Convert.ToDecimal(((TextBox)e.Item.Cells[3].Controls[0]).Text);
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("UpdateMark", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-            cmd.Parameters.AddWithValue("@mark_id", markid);
-            cmd.Parameters.AddWithValue("@user_id", userid);
-            cmd.Parameters.AddWithValue("@subject_id", subjectid);
-            cmd.Parameters.AddWithValue("@exam_id", examid);
-            cmd.Parameters.AddWithValue("@marks_obtained", marks);
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
+
+            try
             {
-                DataGrid1.EditItemIndex = -1;
-                LoadmarkData();
-                lblMessage.Text = "mark record updated successfully.";
+                int markid = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
+                int userid = int.Parse(((TextBox)e.Item.Cells[1].Controls[0]).Text);
+                int subjectid = Convert.ToInt32(((TextBox)e.Item.Cells[2].Controls[0]).Text);
+                int examid = Convert.ToInt32(((TextBox)e.Item.Cells[3].Controls[0]).Text);
+                decimal marks = Convert.ToDecimal(((TextBox)e.Item.Cells[3].Controls[0]).Text);
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("UpdateMark", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                cmd.Parameters.AddWithValue("@mark_id", markid);
+                cmd.Parameters.AddWithValue("@user_id", userid);
+                cmd.Parameters.AddWithValue("@subject_id", subjectid);
+                cmd.Parameters.AddWithValue("@exam_id", examid);
+                cmd.Parameters.AddWithValue("@marks_obtained", marks);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    DataGrid1.EditItemIndex = -1;
+                    LoadmarkData();
+                    lblMessage.Text = "mark record updated successfully.";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update mark record.";
+                }
             }
-            else
+            catch (System.FormatException)
             {
-                lblMessage.Text = "Failed to update mark record.";
+                lblMessage.Text = "Valid date of birth required.";
             }
+
         }
     }
 }

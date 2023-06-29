@@ -105,6 +105,7 @@ namespace My_control_system
             userTextBox.Text = string.Empty;
             subjectTextBox.Text = string.Empty;
             dateTextBox.Text = string.Empty;
+            lblMessage.Text = string.Empty;
         }
       
 
@@ -154,32 +155,41 @@ namespace My_control_system
 
         protected void DataGrid1_UpdateCommand1(object source, DataGridCommandEventArgs e)
         {
-            int attendanceId = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
-            int userId = int.Parse(((TextBox)e.Item.Cells[1].Controls[0]).Text);
-            int subjectId = int.Parse(((TextBox)e.Item.Cells[2].Controls[0]).Text);
-            DateTime date = DateTime.Parse(((TextBox)e.Item.Cells[3].Controls[0]).Text);
-           string isPresent = (((TextBox)e.Item.Cells[4].Controls[0]).Text);
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("UpdateAttendance", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-            cmd.Parameters.AddWithValue("@attendance_id", attendanceId);
-            cmd.Parameters.AddWithValue("@user_id", userId);
-            cmd.Parameters.AddWithValue("@subject_id", subjectId);
-            cmd.Parameters.AddWithValue("@date", date);
-            cmd.Parameters.AddWithValue("@is_present", isPresent);
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
+
+
+            try
             {
-                attendanceDataGrid.EditItemIndex = -1;
-                LoadAttendanceData();
-                lblMessage.Text = "Subject record updated successfully.";
+                int attendanceId = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
+                int userId = int.Parse(((TextBox)e.Item.Cells[1].Controls[0]).Text);
+                int subjectId = int.Parse(((TextBox)e.Item.Cells[2].Controls[0]).Text);
+                DateTime date = DateTime.Parse(((TextBox)e.Item.Cells[3].Controls[0]).Text);
+                string isPresent = (((TextBox)e.Item.Cells[4].Controls[0]).Text);
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("UpdateAttendance", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                cmd.Parameters.AddWithValue("@attendance_id", attendanceId);
+                cmd.Parameters.AddWithValue("@user_id", userId);
+                cmd.Parameters.AddWithValue("@subject_id", subjectId);
+                cmd.Parameters.AddWithValue("@date", date);
+                cmd.Parameters.AddWithValue("@is_present", isPresent);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    attendanceDataGrid.EditItemIndex = -1;
+                    LoadAttendanceData();
+                    lblMessage.Text = "Subject record updated successfully.";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update subject record.";
+                }
             }
-            else
+            catch (System.FormatException)
             {
-                lblMessage.Text = "Failed to update subject record.";
+                lblMessage.Text = "Valid date of birth required.";
             }
 
 

@@ -42,6 +42,7 @@ namespace My_control_system
             staff_idTextBox.Text = string.Empty;
             yearTextBox.Text = string.Empty;
             amountTextBox.Text = string.Empty;
+            lblMessage.Text = string.Empty;
         }
 
         protected void Register_Click(object sender, EventArgs e)
@@ -140,33 +141,41 @@ namespace My_control_system
 
         protected void DataGrid1_UpdateCommand1(object source, DataGridCommandEventArgs e)
         {
-            int salaryId = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
-            int staffId = Convert.ToInt32(((TextBox)e.Item.Cells[1].Controls[0]).Text);
-           string month = (((TextBox)e.Item.Cells[2].Controls[0]).Text);
-            int year = Convert.ToInt32(((TextBox)e.Item.Cells[3].Controls[0]).Text);
-            decimal amount = Convert.ToDecimal(((TextBox)e.Item.Cells[4].Controls[0]).Text);
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("UpdateSalary", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-            cmd.Parameters.AddWithValue("@salary_id ", salaryId);
-            cmd.Parameters.AddWithValue("@staff_id", staffId);
-            cmd.Parameters.AddWithValue("@month", month);
-            cmd.Parameters.AddWithValue("@year", year);
-            cmd.Parameters.AddWithValue("@amount ", amount);
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
+            try
             {
-                DataGrid1.EditItemIndex = -1;
-                LoadsalaryData();
-                lblMessage.Text = "salary record updated successfully.";
+                int salaryId = Convert.ToInt32(((TextBox)e.Item.Cells[0].Controls[0]).Text);
+                int staffId = Convert.ToInt32(((TextBox)e.Item.Cells[1].Controls[0]).Text);
+                string month = (((TextBox)e.Item.Cells[2].Controls[0]).Text);
+                int year = Convert.ToInt32(((TextBox)e.Item.Cells[3].Controls[0]).Text);
+                decimal amount = Convert.ToDecimal(((TextBox)e.Item.Cells[4].Controls[0]).Text);
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("UpdateSalary", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                cmd.Parameters.AddWithValue("@salary_id ", salaryId);
+                cmd.Parameters.AddWithValue("@staff_id", staffId);
+                cmd.Parameters.AddWithValue("@month", month);
+                cmd.Parameters.AddWithValue("@year", year);
+                cmd.Parameters.AddWithValue("@amount ", amount);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    DataGrid1.EditItemIndex = -1;
+                    LoadsalaryData();
+                    lblMessage.Text = "salary record updated successfully.";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update salary record.";
+                }
             }
-            else
+            catch (System.FormatException)
             {
-                lblMessage.Text = "Failed to update salary record.";
+                lblMessage.Text = "Valid date of birth required.";
             }
+
         }
     }
 }

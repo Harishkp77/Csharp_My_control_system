@@ -39,6 +39,7 @@ namespace My_control_system
             course_id.Text = string.Empty;
             course_name.Text = string.Empty;
             course_description.Text = string.Empty;
+            lblMessage.Text = string.Empty;
         }
 
 
@@ -90,35 +91,44 @@ namespace My_control_system
 
         protected void DataGrid1_UpdateCommand1(object source, DataGridCommandEventArgs e)
         {
-            TextBox courseIdTextBox = (TextBox)e.Item.Cells[0].Controls[0];
-            TextBox courseNameTextBox = (TextBox)e.Item.Cells[1].Controls[0];
-            TextBox courseDescriptionTextBox = (TextBox)e.Item.Cells[2].Controls[0];
-
-            int courseId = Convert.ToInt32(courseIdTextBox.Text);
-            string courseName = courseNameTextBox.Text;
-            string courseDescription = courseDescriptionTextBox.Text;
-            string connection = Application["dbconnect"].ToString();
-            SqlConnection con = new SqlConnection(connection);
-            SqlCommand cmd = new SqlCommand("UpdateCourse", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-            cmd.Parameters.AddWithValue("@course_name", courseName);
-            cmd.Parameters.AddWithValue("@course_description", courseDescription);
-            cmd.Parameters.AddWithValue("@course_id", courseId);
-       
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
-            if (rowsAffected > 0)
+            try
             {
-                DataGrid1.EditItemIndex = -1;
-                bindcoursedata();
-                lblMessage.Text = "Course record updated successfully.";
-            }
-            else
-            {
-                lblMessage.Text = "Failed to update course record.";
+
+                TextBox courseIdTextBox = (TextBox)e.Item.Cells[0].Controls[0];
+                TextBox courseNameTextBox = (TextBox)e.Item.Cells[1].Controls[0];
+                TextBox courseDescriptionTextBox = (TextBox)e.Item.Cells[2].Controls[0];
+
+                int courseId = Convert.ToInt32(courseIdTextBox.Text);
+                string courseName = courseNameTextBox.Text;
+                string courseDescription = courseDescriptionTextBox.Text;
+                string connection = Application["dbconnect"].ToString();
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand("UpdateCourse", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                cmd.Parameters.AddWithValue("@course_name", courseName);
+                cmd.Parameters.AddWithValue("@course_description", courseDescription);
+                cmd.Parameters.AddWithValue("@course_id", courseId);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
+                if (rowsAffected > 0)
+                {
+                    DataGrid1.EditItemIndex = -1;
+                    bindcoursedata();
+                    lblMessage.Text = "Course record updated successfully.";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed to update course record.";
+                }
+
             }
 
+            catch (System.FormatException)
+            {
+                lblMessage.Text = "Valid date of birth required.";
+            }
 
 
 
